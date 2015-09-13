@@ -1,0 +1,45 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html ng-app="driveApp">
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <script src="~/Scripts/Libs/jQuery/jquery-2.1.4.min.js"></script>
+    <script src="~/Scripts/Libs/AngularJS/angular.min.js"></script>
+    <script src="~/Scripts/Home/app.js"></script>
+
+    <title>Index</title>
+</head>
+<body>
+    <div class="content" ng-controller="DriveCtrl">
+        <table id="tbl-files">
+            <thead id="tbl-files-section-title">
+                <tr>
+                    <th>Less 10Mb</th>
+                    <th>10Mb-50Mb</th>
+                    <th>More 100Mb</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>33</td>
+                    <td>32</td>
+                    <td>21</td>
+                </tr>
+            </tbody>
+        </table>
+        <br/>
+        <h3>Current path: </h3>
+        <h2>Folders:</h2>
+        <div></div>
+        <hr/>
+        <h2>Files:</h2>
+        <div></div>
+    </div>
+</body>
+</html>
