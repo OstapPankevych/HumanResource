@@ -11,25 +11,31 @@ namespace HumanResource.Controllers.Api
     public class DriveController : ApiController
     {
         private IFixedDriveRepository _fixedDrive = FixedDriveRepository.Current;
-
-        public IEnumerable<string> GetDrives()
+        
+        [Route("api/drive/directory")]
+        [HttpGet]
+        public FixedDrive Directory(string path)
         {
-            return _fixedDrive.Drives;
+            if (path == string.Empty)
+            {
+                return new FixedDrive { Folders = _fixedDrive.Drives };
+            }
+            else
+            {
+                return new FixedDrive
+                {
+                    Folders = _fixedDrive.GetFoldersNames(path),
+                    Files = _fixedDrive.GetFilesNames(path),
+                    CurrentPath = path
+                };
+            }
         }
         
-        public FixedDrive GetDirectory(string path)
+        [Route("api/drive/countFiles")]
+        [HttpGet]
+        public FixedDrive CountFiles(string path)
         {
-            return new FixedDrive
-            {
-                Folders = _fixedDrive.GetFoldersNames(path),
-                Files = _fixedDrive.GetFilesNames(path),
-                CurrentPath = path
-            };
-        }
-
-        public FixedDrive GetCountFiles(FixedDrive fixedDrive)
-        {
-            _fixedDrive.CalculateFiles(fixedDrive.CurrentPath);
+            _fixedDrive.CalculateFiles(path);
             return new FixedDrive
             {
                 CountFilesLessThat_10mb = _fixedDrive.CountFilesLessThat_10mb,

@@ -27,19 +27,21 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>33</td>
-                    <td>32</td>
-                    <td>21</td>
+                    <td>{{currentDirectory.less10mb}}</td>
+                    <td>{{currentDirectory.between10_50mb}}</td>
+                    <td>{{currentDirectory.more100mb}}</td>
                 </tr>
             </tbody>
         </table>
         <br/>
-        <h3>Current path: </h3>
-        <h2>Folders:</h2>
-        <div></div>
+        <h3>Current path: {{currentDirectory.currentPath}}</h3>
+        <div ng-repeat="folder in currentDirectory.folders" 
+             ng-click="currentDirectory.getDrives('{{folder}}')">
+            {{folder}}
+        </div>
         <hr/>
-        <h2>Files:</h2>
-        <div></div>
+        <div ng-repeat="files in currentDirectory.files">{{files}}</div>
+        <input type="button" ng-click="currentDirectory.getItems('E:\\')"/>
     </div>
 </body>
 </html>
