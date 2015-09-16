@@ -72,9 +72,15 @@ namespace HumanResource.Models.Drives
         public List<string> GetFoldersNames(string path)
         {
             List<string> directoryList = new List<string>();
+
+            DirectoryInfo directoryInfo = null;
             foreach (var x in Directory.GetDirectories(path))
             {
-                directoryList.Add(new DirectoryInfo(x).Name);
+                directoryInfo = new DirectoryInfo(x);
+                if (this.HasWriteAccessToFolder(directoryInfo))
+                {
+                    directoryList.Add(directoryInfo.Name);
+                }
             }
 
             return directoryList;
@@ -83,6 +89,7 @@ namespace HumanResource.Models.Drives
         public List<string> GetFilesNames(string path)
         {
             List<string> fileList = new List<string>();
+
             foreach (var x in Directory.GetFiles(path))
             {
                 fileList.Add(new FileInfo(x).Name);
@@ -93,6 +100,11 @@ namespace HumanResource.Models.Drives
 
         public void CalculateFiles(string path)
         {
+            if (String.IsNullOrEmpty(path))
+            {
+                return;
+            }
+
             string[] subdirectoryEntries;
             try
             {
@@ -102,14 +114,28 @@ namespace HumanResource.Models.Drives
             {
                 return;
             }
+
             foreach (string subdirectory in subdirectoryEntries)
             {
                 foreach (var fileInfo in Directory.GetFiles(path))
                 {
-                    IncrementCountFiles(new FileInfo(fileInfo));
+                    this.IncrementCountFiles(new FileInfo(fileInfo));
                 }
                 CalculateFiles(subdirectory);
             }
+        }
+
+        public string GetParentPath(string path)
+        {
+            if ( !String.IsNullOrEmpty(path))
+            {
+                if (System.IO.Directory.GetParent(path) != null)
+                {
+                    return System.IO.Directory.GetParent(path).FullName;
+                }
+            }
+
+            return String.Empty;
         }
 
         #endregion
@@ -133,6 +159,19 @@ namespace HumanResource.Models.Drives
             else if (fileSize >= MB_100)
             {
                 CountFilesMoreThat_100mb++;
+            }
+        }
+
+        private bool HasWriteAccessToFolder(DirectoryInfo directoryInfo)
+        {
+            try
+            {
+                System.Security.AccessControl.DirectorySecurity ds = Directory.GetAccessControl(directoryInfo.FullName);
+                return true;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return false;
             }
         }
 

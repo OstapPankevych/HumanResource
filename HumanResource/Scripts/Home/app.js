@@ -5,13 +5,14 @@ driveApp.controller('DriveCtrl', function ($scope, $http) {
     var getFiles = function (path) {
         return $http.get('/api/drive/directory', { params: { path: path } })
             .success(function (data) {
+                $scope.currentDirectory.parentPath = data.ParentPath;
                 $scope.currentDirectory.currentPath = data.CurrentPath;
                 $scope.currentDirectory.folders = data.Folders;
                 $scope.currentDirectory.files = data.Files;
             });
     }
 
-    var getFilesInfo = function (path) {
+    var getCountFiles = function (path) {
         return $http.get('api/drive/countFiles', { params: { path: path } })
             .success(function (data) {
                 $scope.currentDirectory.less10mb = data.CountFilesLessThat_10mb;
@@ -22,6 +23,7 @@ driveApp.controller('DriveCtrl', function ($scope, $http) {
 
     $scope.currentDirectory = {
         currentPath: '',
+        parentPath: '',
         folders: [],
         files: [],
         less10mb: 0,
@@ -29,22 +31,23 @@ driveApp.controller('DriveCtrl', function ($scope, $http) {
         more100mb: 0,
 
         getItems: function (folder) {
-            if (folder == '' || folder == undefined){
-                
-            }
-            var path = (this.currentPath == '') ? folder : this.currentPath + "\\" + folder;
+            var path = (this.currentPath == "" || this.currentPath == null) ? folder : this.currentPath + "\\" + folder;
 
             // Get folders and files in current directory.
             getFiles(path);
 
             // Get count files in current directory.
-            getFilesInfo(path);
+            getCountFiles(path);
+        },
+
+        back: function () {
+            getFiles(this.parentPath);
+            getCountFiles(this.parentPath);
         },
 
         init: function () {
-            this.getItems("\\");
+            this.getItems("");
         }
-
     };
 });
 

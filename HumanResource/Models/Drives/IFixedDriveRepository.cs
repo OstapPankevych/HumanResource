@@ -17,6 +17,7 @@ namespace HumanResource.Models.Drives
 
         List<string> GetFilesNames(string path);
         List<string> GetFoldersNames(string path);
+        string GetParentPath(string path);
         void CalculateFiles(string path);
 
         #endregion Methods

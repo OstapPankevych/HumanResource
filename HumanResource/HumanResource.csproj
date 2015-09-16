@@ -102,12 +102,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Images\back-folder.png" />
     <Content Include="Content\Images\file.png" />
     <Content Include="Content\Images\folder.png" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\Home\app.js" />
     <Content Include="Scripts\Libs\AngularJS\angular.min.js" />
-    <Content Include="Scripts\Libs\jQuery\jquery-2.1.4.min.js" />
+    <Content Include="Styles\home-page.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

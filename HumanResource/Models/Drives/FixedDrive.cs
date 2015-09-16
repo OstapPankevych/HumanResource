@@ -11,6 +11,7 @@ namespace HumanResource.Models.Drives
         public IEnumerable<string> Folders { get; set; }
         public IEnumerable<string> Files { get; set; }
         public string CurrentPath { get; set; }
+        public string ParentPath { get; set; }
         public int CountFilesLessThat_10mb { get; set; }
         public int CountFiles_10_50mb { get; set; }
         public int CountFilesMoreThat_100mb { get; set; }

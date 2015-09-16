@@ -1,0 +1,16 @@
+﻿ .image-item{
+    height: 24px;
+    width: 24px;
+}
+
+.name-item{
+    font-size: 13pt;
+}
+
+.center-text{
+    text-align: center;
+}
+
+.tbl-titles{
+    background-color: silver;
+}

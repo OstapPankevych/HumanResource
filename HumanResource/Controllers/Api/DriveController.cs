@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using HumanResource.Models.Drives;
 
@@ -10,15 +6,25 @@ namespace HumanResource.Controllers.Api
 {
     public class DriveController : ApiController
     {
+        #region Private
+
         private IFixedDriveRepository _fixedDrive = FixedDriveRepository.Current;
-        
+
+        #endregion
+
+        #region API Methods
+
         [Route("api/drive/directory")]
         [HttpGet]
         public FixedDrive Directory(string path)
         {
-            if (path == string.Empty)
+            if (String.IsNullOrEmpty(path))
             {
-                return new FixedDrive { Folders = _fixedDrive.Drives };
+                return new FixedDrive
+                {
+                    Folders = _fixedDrive.Drives,
+                    ParentPath = _fixedDrive.GetParentPath(path)
+                };
             }
             else
             {
@@ -26,7 +32,8 @@ namespace HumanResource.Controllers.Api
                 {
                     Folders = _fixedDrive.GetFoldersNames(path),
                     Files = _fixedDrive.GetFilesNames(path),
-                    CurrentPath = path
+                    CurrentPath = path,
+                    ParentPath =  _fixedDrive.GetParentPath(path)
                 };
             }
         }
@@ -43,6 +50,7 @@ namespace HumanResource.Controllers.Api
                 CountFiles_10_50mb = _fixedDrive.CountFilesBetween_10_50mb
             };
         }
-        
+
+        #endregion
     }
 }

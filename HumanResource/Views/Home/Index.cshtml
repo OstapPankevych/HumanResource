@@ -8,28 +8,17 @@
 <html ng-app="driveApp">
 <head>
     <meta name="viewport" content="width=device-width" />
-
-    <style type="text/css">
-        .image-item{
-            height: 24px;
-            width: 24px;
-        }
-
-        .name-item{
-            font-size: 13pt;
-        }
-    </style>
-
-    <script src="~/Scripts/Libs/jQuery/jquery-2.1.4.min.js"></script>
+    <link href="~/Styles/home-page.css" rel="stylesheet" />
     <script src="~/Scripts/Libs/AngularJS/angular.min.js"></script>
     <script src="~/Scripts/Home/app.js"></script>
+
     <title>Index</title>
 </head>
 <body>
     <div class="content" ng-controller="DriveCtrl" ng-init="currentDirectory.init()">
-        <table id="tbl-files">
-            <thead id="tbl-files-section-title">
-                <tr>
+        <table>
+            <thead>
+                <tr class="tbl-titles">
                     <th>Less 10Mb</th>
                     <th>10Mb-50Mb</th>
                     <th>More 100Mb</th>
@@ -37,24 +26,29 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>{{currentDirectory.less10mb}}</td>
-                    <td>{{currentDirectory.between10_50mb}}</td>
-                    <td>{{currentDirectory.more100mb}}</td>
+                    <td class="center-text">{{currentDirectory.less10mb}}</td>
+                    <td class="center-text">{{currentDirectory.between10_50mb}}</td>
+                    <td class="center-text">{{currentDirectory.more100mb}}</td>
                 </tr>
             </tbody>
         </table>
         <br/>
-        <h3>Current path: {{currentDirectory.currentPath}}</h3>
+        <span>Current path: {{currentDirectory.currentPath}}</span>
+        <div>
+            <img class="image-item" src="~/Content/Images/back-folder.png">
+            <a href="" class="name-item" ng-click="currentDirectory.back()">back</a>
+        </div>
+        <br/>
+        <h2>folders:</h2>
         <div ng-repeat="folder in currentDirectory.folders">
             <img class="image-item" src="~/Content/Images/folder.png">
-            <a class="name-item" ng-click="currentDirectory.getItems(folder)">{{folder}}</a>
+            <a href="" class="name-item" ng-click="currentDirectory.getItems(folder)">{{folder}}</a>
         </div>
-        <hr/>
+        <h2>files:</h2>
         <div ng-repeat="file in currentDirectory.files">
             <img class="image-item" src="~/Content/Images/file.png">
             <span class="name-item">{{file}}</span>
         </div>
     </div>
-
 </body>
 </html>
