@@ -9,10 +9,20 @@
 <head>
     <meta name="viewport" content="width=device-width" />
 
+    <style type="text/css">
+        .image-item{
+            height: 24px;
+            width: 24px;
+        }
+
+        .name-item{
+            font-size: 13pt;
+        }
+    </style>
+
     <script src="~/Scripts/Libs/jQuery/jquery-2.1.4.min.js"></script>
     <script src="~/Scripts/Libs/AngularJS/angular.min.js"></script>
     <script src="~/Scripts/Home/app.js"></script>
-
     <title>Index</title>
 </head>
 <body>
@@ -35,13 +45,16 @@
         </table>
         <br/>
         <h3>Current path: {{currentDirectory.currentPath}}</h3>
-        <div ng-repeat="folder in currentDirectory.folders" 
-             ng-click="currentDirectory.getDrives('{{folder}}')">
-            {{folder}}
+        <div ng-repeat="folder in currentDirectory.folders">
+            <img class="image-item" src="~/Content/Images/folder.png">
+            <a class="name-item" ng-click="currentDirectory.getItems(folder)">{{folder}}</a>
         </div>
         <hr/>
-        <div ng-repeat="files in currentDirectory.files">{{files}}</div>
-        <input type="button" ng-click="currentDirectory.getItems('E:\\')"/>
+        <div ng-repeat="file in currentDirectory.files">
+            <img class="image-item" src="~/Content/Images/file.png">
+            <span class="name-item">{{file}}</span>
+        </div>
     </div>
+
 </body>
 </html>

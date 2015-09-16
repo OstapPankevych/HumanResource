@@ -102,6 +102,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Images\file.png" />
+    <Content Include="Content\Images\folder.png" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\Home\app.js" />
     <Content Include="Scripts\Libs\AngularJS\angular.min.js" />
